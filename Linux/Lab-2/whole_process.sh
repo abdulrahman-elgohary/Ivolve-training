@@ -1,5 +1,5 @@
 #!/bin/bash 
-
+#Change the value of variables in variables.sh script
 source ./variables.sh
 
 sudo apt update -y
