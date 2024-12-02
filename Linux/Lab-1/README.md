@@ -54,7 +54,7 @@ su - <username>
 ```bash
 sudo apt install nginx
 ```
-  ![image](https://github.com/user-attachments/assets/989a9850-2fc2-4a84-8fb6-0d7c2a206a58)
+![image](https://github.com/user-attachments/assets/989a9850-2fc2-4a84-8fb6-0d7c2a206a58)
 
 - Try to install httpd
   It will not be allowed because the user has only the permission to install nginx
