@@ -1,5 +1,6 @@
 #!/bin/bash 
-
+#The Script will install the required packages
+#You need to change the values of EMAIL and PASS vairiables in variables.sh
 source ./variables.sh
 
 sudo apt update -y
