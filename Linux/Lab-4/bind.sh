@@ -1,5 +1,5 @@
 #!/bin/bash 
-#
+#Run this script on the machine that will host the bind server
 #
 DNS_URL="name-ivolve.com"
 sudo apt update -y
@@ -26,7 +26,7 @@ $TTL 86400
 @               IN      NS      ns1.name-ivolve.com.
 @               IN      A       192.168.1.10
 ns1             IN      A       192.168.1.10
-*.$DNS_URL. IN   A       192.168.1.10
+*.$DNS_URL.     IN      A       192.168.1.10
 EOF
 
 sudo cat<<EOF >> /etc/bind/zones/$DNS_URL.db
@@ -36,4 +36,6 @@ forwarders {
 };
 EOF
 
-## Add the IP of the DNS Server to the /etc/resolv.conf file in the other server to be able to resolve the Given URL  
+sudo systemctl restart bind9
+
+echo "Add the IP of this Bind Server to the /etc/resolv.conf file in the other server to be able to resolve the any Given URL that share the same domain name" 
