@@ -1,11 +1,11 @@
-#!/bin/bash
+source ./variables.sh
 
-USAGE=$(df -h / | tail -1 | awk '{print $5}' | tr -d %)
-THRESHOLD=10
-
-if (( USAGE > THRESHOLD )); then 
-echo "Check your Gmail Inbox  .. An E-mail is being send"
-echo -e "An Alert for a high disk space on the root filesystem" | mail -s "Alert" ahmedelgohary96@gmail.com
+if (( USAGE > THRESHOLD )); then
+    echo "Check your Gmail Inbox... An E-mail is being sent..."
+    
+    if echo -e "Dear Gohary,\n\nAn alert for high disk space usage on the root filesystem has been detected for "$USAGE"% usage.\n\nBest regards,\nUbuntu" | mail -s "Alert: High Disk Space Usage" ahmedelgohary96@gmail.com; then
+        echo "The email has been sent successfully."
+    else
+        echo "Failed to send the email."
+    fi
 fi
-
-
