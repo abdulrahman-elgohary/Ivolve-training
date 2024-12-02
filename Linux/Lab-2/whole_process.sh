@@ -41,4 +41,4 @@ EOF
 
 chmod +x disk_space_alert.sh
 chmod 600 ~/.msmtprc
-./disk_space_alert.sh
+echo "***** Add the full path of the script to a cron job using the command crontab -e *****"
