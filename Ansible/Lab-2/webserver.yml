@@ -1,0 +1,27 @@
+---
+- name: Playbook to configure a web server
+  hosts: aws
+  become: true 
+
+  tasks:
+
+    - name: Update Repository Cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+
+    - name: Verfiy that Nginx is up and running
+      ansible.builtin.service:
+        name: nginx
+        enabled: true
+        state: started
+
+    - name: Adding a new index.html file
+      ansible.builtin.copy:
+        content: "<h1> Ansible has configured this web server </h1>"
+        dest: /var/www/html/index.html
+        mode: '0644'
