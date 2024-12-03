@@ -24,7 +24,7 @@ Write an Ansible playbook to:
     db_user: ivolve_user
     db_password: 12345
     ```
-    - The Content is encrypted until you insert the vault password
+    - The Content is encrypted until you decrypt the file using the vault password
    
       ![image](https://github.com/user-attachments/assets/1d029061-ef13-4b5a-b3e1-0435f8b09c28)
 
