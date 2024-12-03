@@ -1,0 +1,16 @@
+---
+
+- name: Adding Docker Repo Key
+  ansible.builtin.shell: |
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /usr/share/keyrings/docker-keyring.asc > /dev/null
+
+- name: Adding Docker Repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-keyring.asc] https://download.docker.com/linux/ubuntu focal stable"
+
+- name: Installing Docker
+  ansible.builtin.apt:
+    name: docker-ce
+    state: present
+
+

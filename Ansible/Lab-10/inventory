@@ -1,0 +1,11 @@
+[aws]
+
+44.222.61.128
+18.232.186.66
+
+[aws:vars]
+
+ansible_user=ubuntu
+ansible_ssh_private_key_file= ~/ivolve/Ansible/Project1_Key.pem
+
+

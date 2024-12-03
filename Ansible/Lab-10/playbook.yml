@@ -1,0 +1,13 @@
+---
+- name: A playbook to install Docker and Jenkins and OpenShift CLI using Roles
+  hosts: aws
+  become: true
+
+  
+  roles:
+    - pre_installation
+    - docker
+    - role: jenkins
+      tags: j
+    - role: oc
+      tags: o

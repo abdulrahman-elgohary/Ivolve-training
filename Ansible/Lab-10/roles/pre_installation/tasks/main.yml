@@ -1,0 +1,14 @@
+---
+- name: Install necessary packages 
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - openjdk-11-jdk            #This package is necessary for Jenkins
+    - apt-transport-https       #Allowing Download Over HTTPS
+    - ca-certificates           #Ensures SSL/TLS
+    - curl 
+    - software-properties-common #Allows Adding Repository easily
+
+    
+

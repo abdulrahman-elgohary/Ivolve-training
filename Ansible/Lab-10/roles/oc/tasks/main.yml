@@ -1,0 +1,11 @@
+---
+- name: Downloading Openshift CLI
+  ansible.builtin.get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+    dest: /tmp/oc.tar.gz
+
+- name: Extracting and moving the Binary
+  ansible.builtin.unarchive:
+    src: /tmp/oc.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
