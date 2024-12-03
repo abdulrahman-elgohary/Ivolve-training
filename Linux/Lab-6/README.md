@@ -63,6 +63,3 @@ Host ivolve
   
 ![image](https://github.com/user-attachments/assets/521e4349-0996-484c-9174-b815fd2e9775)
 
-##
-# I created a script to automate the process, eliminating the need to run each command manually.
-
