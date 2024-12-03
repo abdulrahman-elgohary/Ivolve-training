@@ -33,9 +33,8 @@ Install and configure Ansible Automation Platform on a control node (Ubuntu), cr
     [$GROUP]
     $SERVER_1
     $SERVER_2
-    [$GROUP:vars]
 
-    [aws:vars]
+    [$GROUP:vars]
     ansible_user=$SERVER_USER
     ansible_ssh_private_key_file= $KEY_PATH
     ```
