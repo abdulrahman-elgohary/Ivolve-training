@@ -1,4 +1,4 @@
-# Lab: SSH Key Generation and Configuration  
+# Lab 6: SSH Key Generation and Configuration  
 
 ## Objective  
 Generate public and private SSH keys and enable key-based SSH access from your machine to another VM. Configure SSH so that you can run the command `ssh ivolve` without specifying the username, IP address, or key.

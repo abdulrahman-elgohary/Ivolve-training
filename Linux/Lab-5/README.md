@@ -118,13 +118,13 @@ Attach the disk using your virtualization platform (VirtualBox, VMware, etc.).
     ```bash
     sudo mount -av
     ```
-   ![image](https://github.com/user-attachments/assets/e7a112e0-b1be-4e78-9856-2dd271cac6bc)
+    ![image](https://github.com/user-attachments/assets/e7a112e0-b1be-4e78-9856-2dd271cac6bc)
    
    - Visualize the disk structure.
    ```bash
     lsblk
     ```
-   ![image](https://github.com/user-attachments/assets/7c9f71fc-6456-4dda-b5ab-b4fcd9eb1da5)
+    ![image](https://github.com/user-attachments/assets/7c9f71fc-6456-4dda-b5ab-b4fcd9eb1da5)
 
 
 ---
