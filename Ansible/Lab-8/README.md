@@ -48,8 +48,7 @@ Write an Ansible playbook to automate the configuration of a web server, includi
             content: "<h1> Ansible has configured this web server </h1>"
             dest: /var/www/html/index.html
             mode: '0644'
-    
-        ```
+ 
 
 ---
 
