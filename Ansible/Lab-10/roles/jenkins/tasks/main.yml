@@ -1,18 +1,20 @@
 ---
 
 
-- name: Adding Jenkins Repo Key
-  ansible.builtin.shell: |
-      curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee /usr/share/keyrings/jenkins-archive-keyring.asc > /dev/null
-
-- name: Adding Jenkins Repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/jenkins-archive-keyring.asc] https://pkg.jenkins.io/debian binary/"
+- name: Add Jenkins repository key
+  ansible.builtin.apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
     state: present
 
-- name: Updating Cache
+- name: Add Jenkins repository
+  ansible.builtin.apt_repository:
+    repo: 'deb https://pkg.jenkins.io/debian binary/'
+    state: present
+
+- name: Update apt Cache
   ansible.builtin.apt:
     update_cache: yes
+
 
 - name: Install Jenkins
   ansible.builtin.apt:
