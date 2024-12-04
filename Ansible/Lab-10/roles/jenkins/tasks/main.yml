@@ -10,11 +10,11 @@
   ansible.builtin.apt_repository:
     repo: 'deb https://pkg.jenkins.io/debian binary/'
     state: present
+  notify: update_cache
 
-- name: Update apt Cache
+- name: Update Cache
   ansible.builtin.apt:
     update_cache: yes
-
 
 - name: Install Jenkins
   ansible.builtin.apt:
