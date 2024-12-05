@@ -3,9 +3,15 @@
   hosts: aws
   become: true
  
+  handlers: 
+   - name: update apt cache 
+     ansible.builtin.apt:
+       update_cache: yes  
   
   roles:
     - pre_installation
     - docker
-    - jenkins
-    - oc
+    - role: jenkins
+      tags: j
+    - role: oc
+      tags: o
