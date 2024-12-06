@@ -1,62 +1,82 @@
-Go to billing and cost management >> Budgets 
+# Lab 12: AWS Security  
+
+## Objective  
+Set a billing alarm, and manage IAM users and groups. The task includes configuring access permissions and enabling MFA for specific users.
+---
+## Steps  
+
+### 1. Set Billing Alarm
+
+- **Go to `Billing and Cost Management` >> `Budgets`**. 
+
 ![image](https://github.com/user-attachments/assets/23662510-6268-4619-964a-f9655e3090f7)
 
-Insert you thresshold budget and the e-mail that will recieve the alert when you exceed this budget 
+
+- **Insert your thresshold budget and the e-mail that will receive the alert when you exceed this budget**.
+  
 ![image](https://github.com/user-attachments/assets/612e57ff-7b35-4fe6-8529-53b612e347f8)
-Here is the budget
+
+
+- **Choose Create a Budget**.
+
 ![image](https://github.com/user-attachments/assets/9623af67-cc5b-4368-b325-80f66e0e0cfb)
-
-MFA
-![image](https://github.com/user-attachments/assets/6bc0c59d-51ee-4324-bc33-a0033bf5aeb3)
-
 
 ### 2. Create IAM Groups  
 
+- Go to `IAM` Service >> `User groups` >> `Create Group`.
+  
 1. **Create Admin and Developer Groups**:  
-    ```bash
-    aws iam create-group --group-name admin
-    aws iam create-group --group-name developer
-    ```
 
-2. **Attach Policies to Groups**:  
-    - Attach the **AdministratorAccess** policy to the `admin` group:  
-      ```bash
-      aws iam attach-group-policy --group-name admin --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
-      ```
+![image](https://github.com/user-attachments/assets/b532f784-7ebb-410b-84c6-358d1551a952)
 
-    - Attach the **AmazonEC2ReadOnlyAccess** policy to the `developer` group:  
-      ```bash
-      aws iam attach-group-policy --group-name developer --policy-arn arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess
-      ```
+2. **Attach Policies to Groups**:
+   
+- Choose the Group from the list and go to `Permission` then `Add Permissions`.
+  
+- Attach the **AdministratorAccess** policy to the `admin` group:
+  
+![image](https://github.com/user-attachments/assets/a0c8940c-c640-4364-bcf4-32497dc1a7f2)
+
+- Attach the **AmazonEC2ReadOnlyAccess** policy to the `developer` group:
+  
+![image](https://github.com/user-attachments/assets/f14d590e-a16e-4bdc-be9e-7e6ef7a459b2)
+
+
 
 ---
 
 ### 3. Create IAM Users  
 
 1. **Create an Admin User with Console Access Only**:  
-    ```bash
-    aws iam create-user --user-name admin-1
-    aws iam add-user-to-group --user-name admin-1 --group-name admin
-    aws iam create-login-profile --user-name admin-1 --password <secure_password>
-    ```
 
-2. **Enable MFA for Admin-1**:  
-    - Go to **IAM Management Console** > **Users** > **admin-1** > **Security Credentials** > **Manage MFA**.
+![image](https://github.com/user-attachments/assets/43db390e-9363-493a-8afc-464faf8c2dc4)
+
+2. **Enable MFA for Admin-1**:
+   
+- Go to **IAM Management Console** > **Users** > **admin-1** > **Security Credentials** > **Manage MFA**.
+      
+![image](https://github.com/user-attachments/assets/6bc0c59d-51ee-4324-bc33-a0033bf5aeb3)
+
 
 3. **Create a Programmatic Admin User** (CLI Access Only):  
-    ```bash
-    aws iam create-user --user-name admin-2-prog
-    aws iam add-user-to-group --user-name admin-2-prog --group-name admin
-    aws iam create-access-key --user-name admin-2-prog
-    ```
+Go to **IAM Management Console** > **Users** > **admin-2** > **Security Credentials** > **Access Keys**.
+
+![image](https://github.com/user-attachments/assets/14b54356-79ac-4242-b0b3-1272d3357923)
+
+- Don't forget to to download the csv file that holding your credentials.
+
+![image](https://github.com/user-attachments/assets/ed934d41-a5cb-422e-9e02-00ec32e2c9fe)
 
 4. **Create a Developer User with Both Console and CLI Access**:  
-    ```bash
-    aws iam create-user --user-name dev-user
-    aws iam add-user-to-group --user-name dev-user --group-name developer
-    aws iam create-login-profile --user-name dev-user --password <secure_password>
-    aws iam create-access-key --user-name dev-user
-    ```
+- Go to **IAM Management Console** > **Users** > **Create user**.
+
+- Choose **Provide user to the AWS Management Console**
+  
+![image](https://github.com/user-attachments/assets/7512b055-13b6-44b4-9bb4-ce330c094019)
+
+- Also Create an Access Key same as the previous steps.
+
+![image](https://github.com/user-attachments/assets/d11c63a1-ac1c-4e26-b1f9-91b9f983f283)
 
 ---
 
