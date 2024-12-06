@@ -3,6 +3,25 @@
 ## Objective  
 Set a billing alarm, and manage IAM users and groups. The task includes configuring access permissions and enabling MFA for specific users.
 ---
+
+## Prequestites 
+
+**Download Aws CLI Package.**
+   
+  ```bash
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  ```
+  - Unzip the Installation File
+      
+```bash
+unzip awscliv2.zip
+```
+  - Run the Installation Script
+      
+```bash
+sudo ./aws/install
+```
+
 ## Steps  
 
 ### 1. Set Billing Alarm
@@ -82,15 +101,37 @@ Go to **IAM Management Console** > **Users** > **admin-2** > **Security Credenti
 
 ### 4. Verify User and Group Setup  
 
-1. **List All IAM Users**:  
-    ```bash
-    aws iam list-users
-    ```
+1- **admin-1-user MFA**
 
-2. **List All IAM Groups**:  
-    ```bash
-    aws iam list-groups
-    ```
+![image](https://github.com/user-attachments/assets/cdbcdb66-3bbb-4cc6-b122-a6b8b95daf4b)  ![image](https://github.com/user-attachments/assets/096cfe2f-5df0-4000-b54e-a814b37782a0)
+
+
+
+2. **List All IAM Users**:  
+
+- Configure the AWS CLI
+     
+```bash
+aws configure
+```
+- Insert you `Access Key ID` , `Secret Access Key` , `Region` , `Output Format`
+
+![image](https://github.com/user-attachments/assets/dfc597de-c504-4025-b953-a454c8e36825)
+
+
+ ```bash
+ aws iam list-users
+ ```
+
+![image](https://github.com/user-attachments/assets/9dfc42ac-7359-4450-8b8c-6f30a877c381)
+
+
+3. **List All IAM Groups**:
+   
+ ```bash
+ aws iam list-groups
+ ```
+![image](https://github.com/user-attachments/assets/be3d7dcc-9ad4-4dbf-ae29-f10e24544192)
 
 ---
 
@@ -98,19 +139,17 @@ Go to **IAM Management Console** > **Users** > **admin-2** > **Security Credenti
 
 1. **Switch to dev-user** credentials for testing programmatic access.  
 
-2. **Access EC2** (should work):  
+2. **Access EC2** (should fail due to lack of permissions):  
     ```bash
     aws ec2 describe-instances --profile dev-user
     ```
+![image](https://github.com/user-attachments/assets/db85919a-6962-42a0-beab-ec41bc1d0a1d)
 
 3. **Try Accessing S3** (should fail due to lack of permissions):  
     ```bash
     aws s3 ls --profile dev-user
     ```
+![image](https://github.com/user-attachments/assets/f5e9fe98-cb85-4b8a-9e49-63b56e354b80)
 
 ---
 
-## Notes  
-- Ensure **admin-1** and **admin-2-prog** have appropriate MFA and security settings.  
-- Developers can only access EC2 but not S3 based on the policies attached.  
-- Adjust IAM policies as needed to refine access control.
