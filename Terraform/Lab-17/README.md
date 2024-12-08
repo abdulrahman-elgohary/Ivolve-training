@@ -146,7 +146,114 @@ resource "aws_subnet" "Private-1" {
 
 1. **Define the Security Group for the EC2**:
 
+```
+resource "aws_security_group" "ec2-sg" {
+  name        = "ec2-sg"
+  description = "Allow inbound traffic"
+  vpc_id      = data.aws_vpc.by_tag.id
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "ec2-sg"
+  }
+}
 
+```
+
+2. **Define the Security Group for ALB**:
+
+```
+resource "aws_security_group" "rds-sg" {
+  name        = "rds-sg"
+  description = "Allow inbound traffic"
+  vpc_id      = data.aws_vpc.by_tag.id
+
+  ingress {
+    description = "MySQL"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    security_groups =  [aws_security_group.ec2-sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "rds-sg"
+  }
+}
+```
 ---
 
+### 6. Define the EC2 Resource 
+
+```
+resource "aws_instance" "ec2-1" {
+  ami           = "ami-0e2c8caa4b6378d8c"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.Public-1.id
+  security_groups = [aws_security_group.ec2-sg.id]
+  tags = {
+    Name = "ec2-1"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${self.public_ip} > ec2-ip.txt"
+  }
+
+}
+```
+
+### 7. Define the database subnet group
+
+```
+resource "aws_db_subnet_group" "rds-subnet" {
+  name       = "rds-subnet"
+  subnet_ids = [aws_subnet.Private-1.id , aws_subnet.Public-1.id]
+  tags = {
+    Name = "rds-subnet"
+  }
+}
+```
+
+### 8. Create the database
+
+```
+resource "aws_db_instance" "rds_instance" {
+  allocated_storage    = 20                       # Storage size in GB
+  engine               = "mysql"                  # Replace with your desired engine (e.g., "postgres",
+  engine_version       = "8.0.39"                 # Specific version of the engine
+  instance_class       = "db.t3.micro"            # RDS instance type
+  username             = "admin"                  # Master username
+  password             = "Password123" # Master password
+  parameter_group_name = "default.mysql8.0"       # Replace with your engine's default parameter group
+  publicly_accessible  = true                     # Set false for private instances
+  skip_final_snapshot  = true                     # Avoid snapshot on deletion for testing
+  vpc_security_group_ids = [aws_security_group.rds-sg.id]
+  db_subnet_group_name   = aws_db_subnet_group.rds-subnet.name
+}
+
+```
 
