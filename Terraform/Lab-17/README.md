@@ -10,6 +10,31 @@
 3. Use a local provisioner to save the EC2 public IP address into a file named `ec2-ip.txt`.  
 
 ---
+## Required Installation 
+
+1. Add the HashiCorp GPG Key
+   
+```
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+```
+
+2. Add the HashiCorp Repository
+
+```
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+```
+
+3. Update the System
+
+```
+sudo apt update
+```
+
+4. Install Terraform
+
+```
+sudo apt install terraform
+```
 
 ## Steps  
 
