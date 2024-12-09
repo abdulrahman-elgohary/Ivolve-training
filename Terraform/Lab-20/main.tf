@@ -8,6 +8,8 @@ resource "aws_vpc" "custom_vpc" {
   tags = {
     Name = "custom_vpc"
   }
+ 
+
 }
 
 #Create a Internet Gateway

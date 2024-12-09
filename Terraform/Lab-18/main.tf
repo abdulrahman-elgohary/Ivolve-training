@@ -21,6 +21,7 @@ resource "aws_subnet" "public_subnet" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = var.public_subnet_cidr[count.index]
   availability_zone = var.availability_zone
+  map_public_ip_on_launch = true
   tags = {
     Name = "public_subnet_${count.index + 1}"
   }
@@ -79,15 +80,13 @@ resource "aws_security_group" "sg_nginx_tr" {
     Name = "sg_http_tr"
   }
 }
-
 #Create an Ec2 in each Subnet
 
-module "ec2_subnet_1" {
+module "ec2_subnet" {
+  count = 2
   source = "./modules/compute"
-  subnet_id = aws_subnet.public_subnet[0].id
+  sg_ec2 = aws_security_group.sg_nginx_tr.id
+  subnet_id = aws_subnet.public_subnet[count.index].id
 }
 
-module "ec2_subnet_2" {
-  source = "./modules/compute"
-  subnet_id = aws_subnet.public_subnet[1].id
-}
+

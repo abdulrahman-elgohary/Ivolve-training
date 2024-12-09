@@ -9,3 +9,7 @@ data "aws_ami" "Amazon-linux-ami" {
     values = ["amzn2-ami-hvm*"]
   }
 }
+
+variable "sg_ec2" {
+  type = string
+}
