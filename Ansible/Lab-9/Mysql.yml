@@ -1,0 +1,30 @@
+---
+- name: A Playbook to install mysql database and using vault to encrypt sensitive data
+  hosts: aws
+  become: true
+  
+  vars_files:
+    - ./mysql_cred.yml
+
+  tasks:
+    - name: Install Mysql
+      ansible.builtin.apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+
+
+    - name: Verfiy that mysql is up and running
+      ansible.builtin.service:
+        name: mysql
+        enabled: true
+        state: started
+
+    - name: Create ivolve database and also create user with password and give him privileges
+      ansible.builtin.shell: |
+        mysql -u root -e "CREATE DATABASE IF NOT EXISTS {{ db_name }} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        mysql -u root -e "CREATE USER IF NOT EXISTS '{{ db_user }}'@'%' IDENTIFIED BY '{{ db_pass }}';"
+        mysql -u root -e "GRANT ALL PRIVILEGES ON {{ db_name }}.* TO '{{ db_user }}'@'%'; FLUSH PRIVILEGES;"
+
+
+

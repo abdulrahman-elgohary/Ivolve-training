@@ -1,0 +1,19 @@
+---
+
+- name: Update the system
+  ansible.builtin.apt:
+    update_cache: yes
+
+
+- name: Install necessary packages 
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - openjdk-17-jdk            #This package is necessary for Jenkins
+    - apt-transport-https       #Allowing Download Over HTTPS
+    - ca-certificates           #Ensures SSL/TLS
+    - curl 
+    - software-properties-common #Allows Adding Repository easily
+    
+

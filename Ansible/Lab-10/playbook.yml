@@ -1,0 +1,17 @@
+---
+- name: A playbook to install Docker and Jenkins and OpenShift CLI using Roles
+  hosts: aws
+  become: true
+ 
+  handlers: 
+   - name: update apt cache 
+     ansible.builtin.apt:
+       update_cache: yes  
+  
+  roles:
+    - pre_installation
+    - docker
+    - role: jenkins
+      tags: j
+    - role: oc
+      tags: o
