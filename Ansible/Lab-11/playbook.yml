@@ -1,0 +1,5 @@
+- name: Install Apache on Dynamic Inventory Hosts
+  hosts: tag_Name_custom_ec2-bastion
+  become: yes
+  roles:
+    - geerlingguy.apache
