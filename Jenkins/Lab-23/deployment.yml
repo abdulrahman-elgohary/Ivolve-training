@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: my-container
-        image: my-image:latest # <-- Update this to the new image
+        image: my-image:latest
         ports:
         - containerPort: 80
