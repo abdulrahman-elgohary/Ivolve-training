@@ -90,9 +90,29 @@ docker images
 
 ![image](https://github.com/user-attachments/assets/5afe4a52-c72c-4b82-b53d-8c0b85c5a745)
 
-### 3.
+### 3. Push the New Image to Docker Hub
 
-
-
-
+- Create a Private Dockerhub
   
+- Create Credentials for the Jenkins to be able to access the private repo
+
+![image](https://github.com/user-attachments/assets/9bf464ba-d9e6-4993-a601-d44c8d2edc6c)
+
+- Make the Credentials as Secrets in the `Build Environment` choose `Use secret text or file` then create two variables `USERNAME` and `PASSWORD` and choose the credentials of the dockerhub repo
+
+![image](https://github.com/user-attachments/assets/b82c5237-3cdb-44db-85e8-fe0b289dcb6e)
+
+- In the `Execute Shell` insert the following lines (We use the username/reponame) as the image name
+
+```bash
+docker build -t gohary101/jenkins_repo101:1.0 .
+docker login -u $USERNAME -p $PASSWORD
+docker push gohary101/jenkins_repo101:1.0
+```
+
+![image](https://github.com/user-attachments/assets/405a2bd1-3eb7-4722-8a7c-732d48b7ed89)
+
+- Verify that the image has been pushed to the docker hub repo
+
+![image](https://github.com/user-attachments/assets/ee0d3e20-eafc-401f-b004-34df0de76136)
+
