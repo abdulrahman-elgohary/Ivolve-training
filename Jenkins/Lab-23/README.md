@@ -26,7 +26,7 @@ Create a Jenkins pipeline that automates the following processes:
 
 ## Steps  
 
-### 1. Run the Jenkins Container with the following charactrestics: 
+### 1. Run the Jenkins Container with the following characteristics: 
 
 1. Mounting volumes
 - Mount Jenkins Home
@@ -39,14 +39,14 @@ docker run -p 8080:8080 -p 50000:50000 -d \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -v $(which docker):/usr/bin/docker jenkins/jenkins:lts
 ```
-2. Change permissions of Jenkins user using the root user
+2. Change permissions of the Jenkins user using the root user
 
 ```bash
 docker exec -it -u 0 33e0ee647ff8 bash
 ```
 ![image](https://github.com/user-attachments/assets/8d3658f1-58b4-451e-a9f6-b06774b3b82e)
 
-- The other users don't have permission to the docker runtime
+- The other users don't have permission to access the docker runtime
 
 ```bash
 chmod 666 /var/run/docker.sock
