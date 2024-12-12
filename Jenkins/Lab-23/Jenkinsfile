@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS = credentials('Docker-Hub-Repo')
+        DOCKER_CREDENTIALS = credentials('DOCKER_CREDENTIALS')
         KUBE_CONFIG = credentials('kubeconfig-file')
         DOCKER_IMAGE = 'gohary101/jenkins_repo101:2.1'
     }
@@ -25,7 +25,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 sh '''
-                echo $PASSWORD | docker login -u $USERNAME --password-stdin
+                echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
                 docker push ${DOCKER_IMAGE}
                 '''
             }
