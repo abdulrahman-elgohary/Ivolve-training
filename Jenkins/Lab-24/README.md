@@ -25,17 +25,12 @@ Implement shared libraries in Jenkins to reuse code across multiple pipelines. C
      src/
      ```
    - **`vars/` Directory**: Contains global functions accessible in pipelines.  
-   - **`src/` Directory**: Contains classes and helper methods.  
 
 2. **Add a Global Function**:  
    - Create a file `vars/common.groovy` in the repository:  
      ```groovy
      def printMessage(String message) {
          echo "Shared Library Message: ${message}"
-     }
-
-     def buildDockerImage(String imageName, String dockerfilePath = '.') {
-         sh "docker build -t ${imageName} ${dockerfilePath}"
      }
      ```
 
@@ -75,9 +70,6 @@ Implement shared libraries in Jenkins to reuse code across multiple pipelines. C
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'your-docker-hub-username/app:latest'
-    }
 
     stages {
         stage('Print Shared Library Message') {
@@ -88,18 +80,14 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    common.buildDockerImage(DOCKER_IMAGE)
-                }
-            }
-        }
-    }
-
     post {
         always {
             echo 'Pipeline with shared library complete!'
         }
     }
 }
+
+![image](https://github.com/user-attachments/assets/0e2ddbb3-55a4-4b91-b500-7352803d3996)
+
+
+
