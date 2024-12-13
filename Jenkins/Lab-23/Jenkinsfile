@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         KUBE_CONFIG = credentials('kubeconfig-file')
-        DOCKER_IMAGE = 'gohary101/jenkins_repo101:2.1'
+        DOCKER_IMAGE = 'gohary101/jenkins_repo1010:2.1'
     }
 
     stages {
@@ -39,7 +39,7 @@ pipeline {
         stage('Update Deployment File') {
             steps {
                 sh '''
-                sed -i 's|image: .*|image: ${DOCKER_IMAGE}|' Jenkins/Lab-23/deployment.yml
+                sed -i "s|image: .*|image: ${DOCKER_IMAGE}|" Jenkins/Lab-23/deployment.yml
                 '''
             }
         }
@@ -47,7 +47,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig-file']) {
-                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f Jenkins/Lab-23/deployment.yml'
                 }
             }
         }
