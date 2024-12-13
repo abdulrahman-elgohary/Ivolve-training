@@ -39,7 +39,7 @@ pipeline {
         stage('Update Deployment File') {
             steps {
                 sh '''
-                sed -i 's|image: .*|image: ${DOCKER_IMAGE}|' deployment.yaml
+                sed -i 's|image: .*|image: ${DOCKER_IMAGE}|' Jenkins/Lab-23/deployment.yaml
                 '''
             }
         }
