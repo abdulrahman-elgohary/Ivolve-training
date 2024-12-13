@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         KUBE_CONFIG = credentials('kubeconfig-file')
-        DOCKER_IMAGE = 'gohary101/jenkins_repo101:2.1'
+        DOCKER_IMAGE = 'gohary101/jenkins_repo1010:2.1'
     }
 
     stages {
