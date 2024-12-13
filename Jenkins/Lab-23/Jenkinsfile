@@ -13,7 +13,17 @@ pipeline {
             }
         }
 
-     stage('Push Docker Image to Docker Hub') {
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build -t ${DOCKER_IMAGE} Jenkins/Lab-23/.
+                '''
+            }
+        }
+        
+
+        stage('Push Docker Image to Docker Hub') {
             steps {
     
                 withCredentials([usernamePassword(credentialsId: 'Docker-Hub-Repo', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -25,23 +35,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh '''
-                docker build -t ${DOCKER_IMAGE} Jenkins/Lab-23/.
-                '''
-            }
-        }
-
-        stage('Push Docker Image to Docker Hub') {
-            steps {
-                sh '''
-                echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
-                docker push ${DOCKER_IMAGE}
-                '''
-            }
-        }
-
+        
         stage('Update Deployment File') {
             steps {
                 sh '''
