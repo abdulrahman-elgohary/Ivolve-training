@@ -26,27 +26,66 @@ Create a Jenkins pipeline that automates the following processes:
 
 ## Steps  
 
-### 1. Run the Jenkins Container with the following characteristics: 
+### 1. Install and Configure Jenkins as a Service  
 
-1. Mounting volumes
-- Mount Jenkins Home
-- Mount the docker volume
-- Mount the docker runtime
+1.1  **Update System Packages**:
 
 ```bash
-docker run -p 8080:8080 -p 50000:50000 -d \
--v jenkins_home:/var/jenkins_home \
--v /var/run/docker.sock:/var/run/docker.sock \
--v $(which docker):/usr/bin/docker jenkins/jenkins:lts
+sudo apt update && sudo apt upgrade -y
 ```
-2. Change permissions of the Jenkins user using the root user
+1.2 **Install Java: Jenkins requires Java. Install it using**
 
 ```bash
-docker exec -it -u 0 33e0ee647ff8 bash
+sudo apt install openjdk-17-jdk
 ```
-![image](https://github.com/user-attachments/assets/8d3658f1-58b4-451e-a9f6-b06774b3b82e)
+1.3 **Add Jenkins GPG Key**
 
-- The other users don't have permission to access the docker runtime
+```bash
+curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee \
+/usr/share/keyrings/jenkins-keyring.asc > /dev/null
+```
+1.4 **Add Jenkins Repository**
+
+```bash
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+https://pkg.jenkins.io/debian binary/ | sudo tee \
+/etc/apt/sources.list.d/jenkins.list > /dev/null
+```
+
+1.5 **Update Package List**
+
+```bash
+sudo apt update
+```
+
+1.6 **Install and Start Jenkins**
+
+```bash
+sudo apt install jenkins -y
+```
+
+```bash
+sudo systemctl start jenkins
+```
+
+```bash
+sudo systemctl enable jenkins
+```
+
+1.7 **Configure Jenkins**
+
+1.7.1 *Access Jenkins Web Interface by navigating to http://<server-ip>:8080*
+
+1.7.2 *Retrieve Admin Password*
+
+```bash
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+1.7.3 *Complete the Setup Wizard*:
+- Use the retrieved password to log in.
+- Install recommended plugins and set up your admin account.
+
+1.7.4 *The other users don't have permission to access the docker runtime*
 
 ```bash
 chmod 666 /var/run/docker.sock
@@ -54,65 +93,54 @@ chmod 666 /var/run/docker.sock
 
 ![image](https://github.com/user-attachments/assets/36b506cf-6efe-4588-bbb3-b782e16fdd25)
 
-- Now you can use the jenkins user to implement docker commands
+- Now Jenkins user can implement docker commands
 
 ![image](https://github.com/user-attachments/assets/349d13a0-55f4-42a8-8384-c2bc5a1e6cdd)
 
-### 2. Build an image from a Docker file 
+### 2. Create Required Ceredentials
 
-- Create Jenkins Credentials to be able to access the git repo
+2.1 **Create Jenkins Credentials to be able to access the git repo**
 
 `Manage Jenkins` >> `Credentials` >> `Add Credentials`
 
 ![image](https://github.com/user-attachments/assets/5bdb8b1e-1db7-4d94-a371-90c0753de1bd)
 
-- Build a new Job to automate the process of building the image from the docker file in the repo
-
-- In the `Source Code Management` Section paste the URL of the Repo and choose your credentials change the branch to `main`
-
-![image](https://github.com/user-attachments/assets/58cba648-0e09-4916-9af2-44fafbcd0618)
-
-- In the `Build Steps` Section choose `Execute Shell` and insert the following line
-
-```bash
-docker build -t python-image:1.0 .
-```
-
-- Run the Build
-
-![image](https://github.com/user-attachments/assets/a390d516-1b1c-4b60-b7a3-f3eaae7f9008)
-
-- Verify that the image has been built in your local machine
-
-```bash
-docker images
-```
-
-![image](https://github.com/user-attachments/assets/5afe4a52-c72c-4b82-b53d-8c0b85c5a745)
-
-### 3. Push the New Image to Docker Hub
-
-- Create a Private Dockerhub
+2.2 **Create a Dockerhub Repository**
   
-- Create Credentials for the Jenkins to be able to access the private repo
+2.3 **Create Credentials for the Jenkins to be able to access the dockerhub repo**
 
 ![image](https://github.com/user-attachments/assets/9bf464ba-d9e6-4993-a601-d44c8d2edc6c)
 
-- Make the Credentials as Secrets in the `Build Environment` choose `Use secret text or file` then create two variables `USERNAME` and `PASSWORD` and choose the credentials of the dockerhub repo
+2.4 **Create Credentials for Jenkins to be able to access the Kubernetes Cluster** 
 
-![image](https://github.com/user-attachments/assets/b82c5237-3cdb-44db-85e8-fe0b289dcb6e)
-
-- In the `Execute Shell` insert the following lines (We use the username/reponame) as the image name
+- Upload the kubconfig file in Kubernetes Cluster to Jenkins Credentials
 
 ```bash
-docker build -t gohary101/jenkins_repo101:1.0 .
-docker login -u $USERNAME -p $PASSWORD
-docker push gohary101/jenkins_repo101:1.0
+~/.kube/config
 ```
+![image](https://github.com/user-attachments/assets/ec03d94e-1e54-4019-8ecf-3a85bb67b246)
 
-![image](https://github.com/user-attachments/assets/405a2bd1-3eb7-4722-8a7c-732d48b7ed89)
+### Create a Pipeline Project 
 
-- Verify that the image has been pushed to the docker hub repo
+- Add the link of the Repo : https://github.com/abdulrahman-elgohary/ivolve-training in the Pipeline Section
 
-![image](https://github.com/user-attachments/assets/ee0d3e20-eafc-401f-b004-34df0de76136)
 
+- Change the branch to main
+- Add the git repo credentials that you created earlier
+- Insert the path of Jenkins File in the Repo to the `Scriptpath` Section
+
+### Check the Jenkins file in the git repo and other related files the run the build 
+
+- Verify the Execution of the Pipeline
+
+```bash
+kubectl get deployments
+```
+![image](https://github.com/user-attachments/assets/aff6fdd9-4edf-47a1-b852-a1a50969e973)
+
+- Check the image used by the pods
+
+```bash
+kubectl describe pod <pod-id>
+```
+![image](https://github.com/user-attachments/assets/98beb73e-eaf7-4b79-885d-e7407cde6f80)
