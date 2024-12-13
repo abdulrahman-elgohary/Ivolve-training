@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS = credentials('DOCKER_CREDENTIALS')
         KUBE_CONFIG = credentials('kubeconfig-file')
         DOCKER_IMAGE = 'gohary101/jenkins_repo101:2.1'
     }
@@ -11,6 +10,18 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/abdulrahman-elgohary/ivolve-training.git'
+            }
+        }
+
+     stage('Push Docker Image to Docker Hub') {
+            steps {
+    
+                withCredentials([usernamePassword(credentialsId: 'Docker-Hub-Repo', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh '''
+                    echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+                    docker push ${DOCKER_IMAGE}
+                    '''
+                }
             }
         }
 
