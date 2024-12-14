@@ -43,9 +43,9 @@ kubectl get namespaces
 
 2.2 **Configure Branch Sources**
 
-- Under `Branch Sources`, add a GitHub source.
+- Under `Branch Sources`, add a Git source.
 - rovide the repository URL (e.g., https://github.com/<your-username>/<repo-name>.git).
 - Set credentials if required.
 - Under `Discover Branches` Choose all branches
   
-![image](https://github.com/user-attachments/assets/74613de4-4bca-424c-a52d-d1c793ce1012)
+![image](https://github.com/user-attachments/assets/7eada1f0-cb93-46fa-8ba5-2d4c5aa431d5)
