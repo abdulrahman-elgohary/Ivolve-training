@@ -17,7 +17,10 @@ Create a Jenkins pipeline that automates the following processes:
    - Pipeline  
    - Docker Pipeline  
    - Kubernetes CLI  
-   - Git  
+   - Git
+   - Credentials 
+   - Credentials Binding
+     
 3. **Access Configuration**:  
    - Jenkins must have access to your GitHub repository and Docker Hub credentials.  
    - Jenkins should have a Kubernetes cluster kubeconfig file.  
