@@ -132,3 +132,18 @@ pipeline {
     }
 }
 ```
+### 6. Test the Multibranch Pipeline
+
+Trigger Builds:
+
+- Push changes to each GitHub branch (dev, staging, production).
+- Verify that Jenkins detects the branch and triggers a build.
+
+![image](https://github.com/user-attachments/assets/72c180bf-f778-4ce2-8df0-076c2b832251)
+
+```bash
+kubectl get pods -n dev
+kubectl get pods -n staging
+kubectl get pods -n production
+```
+
