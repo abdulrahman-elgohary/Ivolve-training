@@ -53,16 +53,63 @@ kubectl get namespaces
 ### 3. Set Up a Jenkins Slave
 
 3.1 **Add a New Node in Jenkins**
-
+- Launch another Server and Install Jenkins with its Prequistes 
 - Navigate to Manage Jenkins > Manage Nodes and Clouds > New Node.
 - Name the node (e.g., k8s-slave) and choose Permanent Agent.
 
 ![image](https://github.com/user-attachments/assets/e797a31c-66ec-4933-a892-3fa01dd2246a)
 
-3.2 **Configure Node Settings**
+3.2 **Preconfigure Node Settings**
 
-- Set the Remote Root Directory (e.g., /home/jenkins/).
-- Provide the Launch Method (e.g., SSH, Docker container).
+-  Connect to the agent server and create a Jenkins user if it's not already exist
+
+```bash
+sudo useradd jenkins -m
+```
+- Set a password
+  
+```bash
+sudo passwd jenkins
+```
+- Switch to the jenkins user
+
+```bash
+su - jenkins
+```
+- Make ssh directory
+
+```bash
+mkdir ~/.ssh && cd ~/.ssh
+```
+```bash
+ssh-keygen -t rsa -C "The access key for Jenkins slaves"
+```
+-  Add the public to authorized_keys file
+
+```bash
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+```
+
+- Copy the contents of the private key to the clipboard and paste it to the jenkins credentials
+- In Credentials choose the `SSH Username with private key`
+
+![image](https://github.com/user-attachments/assets/6688bb2d-038e-4c65-8c1e-64cf9602dc62)
+
+- Connect to the master Jenkins and copy the content of the public key
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+- On the Slave machine paste the content
+
+```bash
+echo "<public-key>" >> ~/.ssh/authorized_keys
+```
+
+### 5.Configure the Node Setting
+- Set the Remote Root Directory (e.g., /var/lib/jenkins/).
+- Provide the Launch Method (e.g., SSH).
+- Choose the created credentials
 
 
 ### 4. Configure the Gitrepo
