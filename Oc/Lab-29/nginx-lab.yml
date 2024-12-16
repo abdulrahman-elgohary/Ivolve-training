@@ -1,0 +1,29 @@
+#Create a Delpoyment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts: 
+        - name: nginx-volume
+          mountPath: /usr/share/nginx/html
+      volumes: 
+      - name: nginx-volume
+        persistentVolumeClaim:
+          claimName: nginx-pvc
