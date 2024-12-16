@@ -61,6 +61,14 @@ kubectl get namespaces
   ```bash
   sudo apt install openjdk-17-jdk
   ```
+
+- Install Kubectl on the slave
+  ```bash
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  chmod +x kubectl
+  sudo mv kubectl /usr/local/bin/
+  kubectl version --client
+  ```
 - Navigate to Manage Jenkins > Manage Nodes and Clouds > New Node.
 - Name the node (e.g., k8s-slave) and choose Permanent Agent.
 
