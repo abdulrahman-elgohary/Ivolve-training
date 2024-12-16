@@ -25,6 +25,7 @@
 Create a file named `mysql-statefulset.yaml`:  
 
 ```yaml
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -68,3 +69,62 @@ spec:
       resources:
         requests:
           storage: 5Gi
+```
+---
+
+### 3. MySQL StatefulSet Service
+
+Create a file named mysql-service.yaml
+
+```yaml
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql
+
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+    protocol: TCP
+  clusterIP: None
+  selector:
+    app: mysql
+```
+- `ClusterIP: None` in the Service ensures the pods are individually addressable in a StatefulSet.
+  
+### 4.Steps to Apply the Configuration
+
+4.1 **Create a Secret for MySQL Root Password**
+
+```bash
+kubectl create secret generic mysql-secret --from-literal=root-password=yourpassword
+```
+![image](https://github.com/user-attachments/assets/72cce236-3ba7-4af1-b5ae-68a397844469)
+
+4.2 **Apply the StatefulSet**
+
+```bash
+kubectl apply -f mysql-statefulset.yaml
+```
+![image](https://github.com/user-attachments/assets/6065ffda-f368-42e7-9ec3-6cb66d239762)
+
+4.3 **Apply the Service**
+
+```bash
+kubectl apply -f mysql-service.yaml
+```
+![image](https://github.com/user-attachments/assets/736c0296-e234-4683-8bd9-fbf18d260f22)
+
+### 5. Access the MySQL Pod
+
+```bash
+kubectl exec -it mysql-0 -- mysql -u root -p
+```
+![image](https://github.com/user-attachments/assets/d8ce4f48-c8c4-40fa-9004-83b913ed1424)
+
+
+
