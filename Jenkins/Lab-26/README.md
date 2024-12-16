@@ -112,7 +112,7 @@ echo "Output of Public Key" >> ~/.ssh/authorized_keys
 ```bash
 pipeline {
     agent {
-        label 'My-Slave'
+        label 'my-slave'
     } 
     environment {
         KUBE_CONFIG = credentials('kubeconfig-file')
@@ -158,4 +158,5 @@ kubectl get pods -n dev
 kubectl get pods -n staging
 kubectl get pods -n production
 ```
+![image](https://github.com/user-attachments/assets/2de8ecc1-4143-40b6-afb5-3432d60f4c30)
 
