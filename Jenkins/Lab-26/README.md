@@ -95,8 +95,12 @@ echo "Output of Public Key" >> ~/.ssh/authorized_keys
 ### 5.Configure the Node Setting
 
 - Set the Remote Root Directory (e.g., /var/lib/jenkins/).
+- Insert `my-slave` in the label section
 - Provide the Launch Method (e.g., SSH).
 - Choose the earlier created credentials
+- Create the node
+
+![image](https://github.com/user-attachments/assets/1a999ebb-ed27-4e2b-8264-704dadba9824)
 
 ### 4. Configure the Gitrepo
 - Create two more branches on the gitrepo ( dev , staging )
