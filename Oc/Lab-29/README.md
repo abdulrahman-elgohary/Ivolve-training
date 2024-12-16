@@ -171,6 +171,16 @@ kubectl exec -it <new-nginx-pod-name> -- cat /usr/share/nginx/html/hello.txt
 
 ![image](https://github.com/user-attachments/assets/7c5efcf3-0488-4efb-864a-fb5721cc02c0)
 
+- The file will now persist across `pod deletions`.
 
 ### 6. Comparison Between PV, PVC, and StorageClass
+
+| Feature             | PersistentVolume (PV)	            |      PersistentVolumeClaim (PVC)	     | StorageClas                                               |
+|---------------------|-----------------------------------|----------------------------------------|-----------------------------------------------------------|
+| **Definition**      | A storage resource in the cluster.|	A request for storage by a user or pod.| Defines the storage type (e.g., AWS EBS, GCP PD).         |
+| **Provisioning**    | Static or dynamic.	              |	Must bind to a PV.                     | Automates dynamic PV creation.                            |
+| **Scope**           | Cluster-wide resource.          	|	Namespace-specific resource.	         | Cluster-wide but tied to storage backends.                |
+| **Access Modes**    | ReadWriteOnce, ReadOnlyMany, ReadWriteMany.	|	Same as PV modes.	           | Defined by the backend storage system.                    |
+| **Use Case**        | Pre-created or dynamically provisioned storage.	|	For pods to request storage via claims.| Simplifies dynamic provisioning of storage. |
+
 
