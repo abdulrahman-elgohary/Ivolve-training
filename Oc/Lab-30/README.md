@@ -110,7 +110,5 @@ kubectl get secrets
 | **Definition**      | Provides an identity for processes running in a pod.	|Grants permissions within a specific namespace.	| Grants permissions across all namespaces in the cluster.|
 | **Scope**    | Namespace-specific.		              | Namespace-specific.	                     | Cluster-wide.                          |
 | **Use Case**          | Used for pod-to-API communication or specific automation tasks.	         	|	Restrict actions on resources like pods, secrets, or configmaps in a single namespace.	         | Used for cluster-wide permissions (e.g., node management, persistent volume access).            |
-| **Binding Mechanism**    | A Service Account used by a Jenkins pod to access Kubernetes resources.			|	Granting read-only access to pods in a namespace for a specific user.      | Granting admin access to all nodes or global secrets across namespaces.
-
-                  |
+| **Binding Mechanism**   | A Service Account used by a Jenkins pod to access Kubernetes resources.			|	Granting read-only access to pods in a namespace for a specific user.      | Granting admin access to all nodes or global secrets across namespaces. |
 | **Examples**        | Pre-created or dynamically provisioned storage.	|	For pods to request storage via claims.| Simplifies dynamic provisioning of storage. |
