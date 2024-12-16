@@ -87,7 +87,6 @@ pipeline {
     }
 }
 
-![image](https://github.com/user-attachments/assets/0e2ddbb3-55a4-4b91-b500-7352803d3996)
 
 
 
