@@ -13,7 +13,7 @@
 
 ### 1. Deploy NGINX with 3 Replicas  
 
-1. Create a deployment YAML file named `nginx-deployment.yaml`:  
+1. Create a deployment YAML file named `nginx.yaml`:  
 
     ```yaml
     apiVersion: apps/v1
@@ -40,7 +40,7 @@
 2. Apply the deployment:  
 
     ```bash
-    kubectl apply -f nginx-deployment.yaml
+    kubectl apply -f nginx.yaml
     ```
 
 
