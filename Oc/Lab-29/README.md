@@ -175,7 +175,7 @@ kubectl exec -it <new-nginx-pod-name> -- cat /usr/share/nginx/html/hello.txt
 
 ### 6. Comparison Between PV, PVC, and StorageClass
 
-| Feature             | PersistentVolume (PV)	            |      PersistentVolumeClaim (PVC)	     | StorageClas                                               |
+| Feature             | PersistentVolume (PV)	            |      PersistentVolumeClaim (PVC)	     | StorageClass                                              |
 |---------------------|-----------------------------------|----------------------------------------|-----------------------------------------------------------|
 | **Definition**      | A storage resource in the cluster.|	A request for storage by a user or pod.| Defines the storage type (e.g., AWS EBS, GCP PD).         |
 | **Provisioning**    | Static or dynamic.	              |	Must bind to a PV.                     | Automates dynamic PV creation.                            |
