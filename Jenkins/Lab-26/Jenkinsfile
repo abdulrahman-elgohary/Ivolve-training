@@ -1,9 +1,8 @@
 pipeline {
-    agent any
-    
-    environment {
-        KUBE_CONFIG = credentials('kubeconfig-file')
+    agent {
+        label 'my-slave'
     }
+    
     stages {
         stage('Deploy to Kubernetes') {
             steps {
