@@ -112,13 +112,19 @@ echo "Output of Public Key" >> ~/.ssh/authorized_keys
 ```bash
 pipeline {
     agent {
-        label 'my-slave'
-    } 
+        label 'my-slave' // Default agent for the pipeline
+    }
     environment {
         KUBE_CONFIG = credentials('kubeconfig-file')
     }
     stages {
+        stage('Build and Test') {
+            steps {
+                echo 'Running build and test on the slave node...'
+            }
+        }
         stage('Deploy to Kubernetes') {
+            agent { label 'master' } // Specify master node for this stage
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig-file']) {
                     script {
@@ -132,10 +138,10 @@ pipeline {
                             namespace = 'dev'
                         }
                         
-                        echo "Deploying to namespace: ${namespace}"
+                        echo "Deploying to the namespace: ${namespace}"
 
                         sh """
-                            kubectl apply -f deployment.yaml -n ${namespace}
+                           kubectl apply -f deployment.yaml -n ${namespace}
                         """
                     }
                 }
@@ -143,6 +149,7 @@ pipeline {
         }
     }
 }
+
 ```
 ### 6. Test the Multibranch Pipeline
 
