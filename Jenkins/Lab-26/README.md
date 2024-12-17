@@ -80,7 +80,7 @@ kubectl get namespaces
 -  Add the public key of the master to authorized_keys file on the slave
 - **On Master**
 ```bash
-cat id_rsa.pub
+cat ~/.ssh/id_rsa.pub
 ```
 **On Slave**
 
