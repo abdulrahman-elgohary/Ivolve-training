@@ -75,27 +75,7 @@ kubectl get rolebindings.rbac.authorization.k8s.io -n default
 
 ![image](https://github.com/user-attachments/assets/07112101-ed92-491c-b312-f572bf10f1ba)
 
-### Step 2: Generating a Secret manually
-
-2.1 Manually Generate a Secret for the Service Account
-
-```bash
-kubectl create secret generic <secret-name> \
-    --type="kubernetes.io/<service-account>-token" \
-    --from-literal=service-account.name=<service-account-name>
-```
-
-![image](https://github.com/user-attachments/assets/5d76a256-a5c4-4971-8967-506ee889f532)
-
-2.2 Confirm the secret is create 
-
-```bash
-kubectl get secrets
-```
-
-![image](https://github.com/user-attachments/assets/61172974-f7c8-4ec6-a586-b72a2f4cd227)
-
-### Step 3: Create the Token for the Service account
+### Step 2: Create the Token for the Service account
 
 ```bash
   kubectl create token <service-account-name> >> token-svc.txt
@@ -103,7 +83,7 @@ kubectl get secrets
 
 ![image](https://github.com/user-attachments/assets/0e20a75e-c205-4f7a-8811-a3ca1f99aea5)
 
-### Step 4: Test the Token
+### Step 3: Test the Token
 
 ```bash
 kubectl auth can-i delete pod --as=system:serviceaccount:default:my-svc-acc
