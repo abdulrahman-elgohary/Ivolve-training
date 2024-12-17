@@ -3,6 +3,10 @@ pipeline {
         label 'my-slave'
     }
     
+    environment {
+        KUBE_CONFIG = credentials('kubeconfig-file')
+    }
+    
     stages {
         stage('Deploy to Kubernetes') {
             steps {
