@@ -46,7 +46,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                withKubeConfig([credentialsId: 'kubeconfig-file']) {
+                withKubeConfig([file(credentialsId: 'kubeconfig-file' , variable: 'KUBECONFIG')]) {
                     sh 'kubectl apply -f Jenkins/Lab-23/deployment.yml'
                 }
             }
