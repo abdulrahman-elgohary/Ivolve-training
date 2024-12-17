@@ -103,6 +103,13 @@ kubectl get secrets
 
 ![image](https://github.com/user-attachments/assets/0e20a75e-c205-4f7a-8811-a3ca1f99aea5)
 
+### Step 4: Test the Token
+
+```bash
+kubectl auth can-i delete pod --as=system:serviceaccount:default:my-svc-acc
+```
+![image](https://github.com/user-attachments/assets/e7d9dfb4-3a11-457b-9198-6f3938bed4cd)
+
 ### Step 4: Comparison
 
 | Feature             | Service Account            |     Role & RoleBinding		     | ClusterRole & ClusterRoleBinding                                               |
