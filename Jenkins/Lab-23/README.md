@@ -97,6 +97,10 @@ chmod 666 /var/run/docker.sock
 
 ![image](https://github.com/user-attachments/assets/349d13a0-55f4-42a8-8384-c2bc5a1e6cdd)
 
+```bash
+chmod 644 /home/mav/.minikube/profiles/minikube/client.key
+```
+
 ### 2. Create Required Ceredentials
 
 2.1 **Create Jenkins Credentials to be able to access the git repo**
