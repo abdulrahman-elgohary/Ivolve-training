@@ -145,7 +145,7 @@ kubectl apply -f mysql-deployment.yaml
    ```bash
    kubectl get all -n ivolve
    ```
-  ![image](https://github.com/user-attachments/assets/85333155-9b7a-47a1-bdf7-bff5b5e09ab4)
+    ![image](https://github.com/user-attachments/assets/85333155-9b7a-47a1-bdf7-bff5b5e09ab4)
 
 2. **Exec into the MySQL pod:**
    ```bash
@@ -158,9 +158,9 @@ kubectl apply -f mysql-deployment.yaml
    # Enter the password stored in MYSQL_PASSWORD (decoded from the Secret).
    mysql> SHOW DATABASES;
    ```
-  ![image](https://github.com/user-attachments/assets/14cad7be-304c-48e2-934b-4470733c7ff7)
+    ![image](https://github.com/user-attachments/assets/14cad7be-304c-48e2-934b-4470733c7ff7)
 
-  ![image](https://github.com/user-attachments/assets/c2b017cb-5e19-479c-84e2-77b99e91230d)
+    ![image](https://github.com/user-attachments/assets/c2b017cb-5e19-479c-84e2-77b99e91230d)
 
 ---
 
