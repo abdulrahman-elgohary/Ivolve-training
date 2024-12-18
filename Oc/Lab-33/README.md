@@ -116,24 +116,19 @@ minikube ip
 ## Differences:
 
 ### Readiness Probe vs. Liveness Probe
-- **Readiness Probe**:
-  - Checks if the application is ready to serve traffic.
-  - If the probe fails, the pod remains in the "NotReady" state, and traffic is not sent to it.
-  - Example use case: Ensure a database connection is established before serving requests.
-
-- **Liveness Probe**:
-  - Checks if the application is still running.
-  - If the probe fails, Kubernetes restarts the container.
-  - Example use case: Detect and recover from deadlocks.
+| Aspect             | Readiness Probe	           |     Liveness Probe	     |                                               
+|---------------------|-----------------------------------|----------------------------------------|  
+| **Purpose**      |Ensures the application is ready to serve traffic.		|Ensures the application is alive and not stuck.| 
+| **When Checked**    | Before sending traffic to the pod.		              | Periodically during the pod's lifecycle.| 
+| **Behavior**          | Marks the pod as "not ready" if it fails.	         	|	Restarts the pod if it fails.     |           
+| **Example Use**   |Database connectivity check.			|	Memory leak detection or infinite loop.      | 
 
 ### Init Container vs. Sidecar Container
-- **Init Container**:
-  - Runs once before the main container starts.
-  - Used for initialization tasks such as configuration setup or waiting for dependencies.
-
-- **Sidecar Container**:
-  - Runs alongside the main container in the same pod.
-  - Used for auxiliary tasks such as logging, monitoring, or proxying requests.
+| Aspect             | Init Container	         |     Sidecar Container     |                                               
+|---------------------|-----------------------------------|----------------------------------------|  
+| **Purpose**      |Prepares the environment for the main container.		|Augments the main container's functionality.| 
+| **Lifecycle**          | Runs once before the main container starts.		         	|	Runs alongside the main container.     |           
+| **Example Use**   |Configuration setup, database migration.				|	Logging, monitoring, or caching.    | 
 
 ---
 
