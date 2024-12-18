@@ -12,12 +12,14 @@ This lab focuses on setting up network configurations for a Kubernetes environme
   git clone https://github.com/IbrahimmAdel/static-website.git
   cd static-website
   ```
-
+- Point your Docker CLI to use Minikube’s Docker daemon:
+  ```bash
+  eval $(minikube docker-env)
+  ```
 - Build the Docker image:
   ```bash
   docker build -t static-web:1.0 .
   ```
-
 - Verify the image:
   ```bash
   docker images | grep static-web:1.0
