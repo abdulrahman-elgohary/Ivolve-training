@@ -99,14 +99,17 @@ kubectl apply -f jenkins-service.yaml
 ```bash
 kubectl get pods
 ```
+![image](https://github.com/user-attachments/assets/4bc0a2c6-09e6-48a9-8d01-91453bee6bea)
 
-- Ensure the init container completes successfully and Jenkins initializes properly:
+- It takes a while until it's ready because of the Readiness Probe
 
+- Retrieve the node-ip
 ```bash
-kubectl logs <jenkins-pod-name> -c init-container
+minikube ip
 ```
-
 - Access Jenkins via `http://<node-ip>:30000`.
+
+![image](https://github.com/user-attachments/assets/2167360e-bf9d-491e-a997-3cfafc99b43a)
 
 ---
 
