@@ -16,7 +16,8 @@ Create a Jenkins pipeline that automates the following processes:
 2. **Plugins to Install**:  
    - Pipeline  
    - Docker Pipeline  
-   - Kubernetes CLI  
+   - Kubernetes CLI
+   - Config File Provider	
    - Git
    - Credentials 
    - Credentials Binding
