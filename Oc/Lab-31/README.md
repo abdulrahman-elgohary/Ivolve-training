@@ -162,7 +162,6 @@ This lab focuses on setting up network configurations for a Kubernetes environme
   ```bash
   curl http://static-website.local
   ```
-
 ---
 
 ### **Validation**
@@ -178,4 +177,7 @@ This lab focuses on setting up network configurations for a Kubernetes environme
    ```
 
 ### **Output**
-- The static website should be accessible via the domain `http://static-website.local`. 
+- The static website should be accessible via the domain `http://static-website.local`.
+
+![image](https://github.com/user-attachments/assets/f78ee241-02cb-4e48-83c0-630ebc55ea92)
+
