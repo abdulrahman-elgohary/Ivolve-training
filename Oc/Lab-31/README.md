@@ -1,6 +1,12 @@
 ### Lab 31: Network Configuration
 
-This lab focuses on setting up network configurations for a Kubernetes environment using Minikube. You will build a Docker image, deploy an application, create a network policy, configure ingress, and access the application via a domain name.
+This lab focuses on setting up network configurations for a Kubernetes environment using Minikube. 
+
+- **You will build a Docker image**
+- **Deploy an application**
+- **Create a network policy**
+- **Configure ingress**
+- **Access the application via a domain name.**
 
 ---
 
