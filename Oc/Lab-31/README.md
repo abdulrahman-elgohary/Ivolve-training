@@ -29,26 +29,31 @@ This lab focuses on setting up network configurations for a Kubernetes environme
 #### **2. Create a Deployment**
 - Create a `deployment.yaml` file:
   ```yaml
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: static-website
-    namespace: default
-  spec:
-    replicas: 3
-    selector:
-      matchLabels:
-        app: static-website
-    template:
-      metadata:
-        labels:
-          app: static-website
-      spec:
-        containers:
-        - name: static-website
-          image: static-website:latest
-          ports:
-          - containerPort: 80
+  ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-web-deployment
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: static-web
+  template:
+    metadata:
+      labels:
+        app: static-web
+    spec:
+      containers:
+      - name: static-web-container
+        image: static-web:1.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
   ```
 
 - Apply the deployment:
@@ -59,19 +64,17 @@ This lab focuses on setting up network configurations for a Kubernetes environme
 #### **3. Expose the Deployment as a Service**
 - Create a `service.yaml` file:
   ```yaml
+  ---
   apiVersion: v1
   kind: Service
   metadata:
-    name: static-website
-    namespace: default
+    name: static-web-svc
   spec:
     selector:
-      app: static-website
+      app: static-web
     ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 80
-    type: ClusterIP
   ```
 
 - Apply the service:
