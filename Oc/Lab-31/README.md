@@ -15,54 +15,54 @@ This lab focuses on setting up network configurations for a Kubernetes environme
 
 - Build the Docker image:
   ```bash
-  docker build -t new-image:1.0 .
+  docker build -t static-web:1.0 .
   ```
 
 - Verify the image:
   ```bash
-  docker images | grep new-image:1.0
+  docker images | grep static-web:1.0
   ```
 
-  ![image](https://github.com/user-attachments/assets/d81e15db-54fa-433e-8c4f-192acdd574c2)
+  ![image](https://github.com/user-attachments/assets/0c43b780-b694-4e1a-bc0f-a3b114314a67)
 
 
 #### **2. Create a Deployment**
-- Create a `deployment.yaml` file:
+- Create a `deployment.yml` file:
   ```yaml
   ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: static-web-deployment
-  namespace: default
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: static-web
-  template:
-    metadata:
-      labels:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: static-web-deployment
+    namespace: default
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
         app: static-web
-    spec:
-      containers:
-      - name: static-web-container
-        image: static-web:1.0
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 80
+    template:
+      metadata:
+        labels:
+          app: static-web
+      spec:
+        containers:
+        - name: static-web-container
+          image: static-web:1.0
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
   ```
 
 - Apply the deployment:
   ```bash
-  kubectl apply -f deployment.yaml
+  kubectl apply -f deployment.yml
   ```
 
 #### **3. Expose the Deployment as a Service**
-- Create a `service.yaml` file:
+- Create a `service.yml` file:
   ```yaml
   ---
   apiVersion: v1
@@ -79,29 +79,30 @@ spec:
 
 - Apply the service:
   ```bash
-  kubectl apply -f service.yaml
+  kubectl apply -f service.yml
   ```
 
 #### **4. Create a Network Policy**
-- Define a `network-policy.yaml` file:
+- Define a `network-policy.yml` file:
   ```yaml
+  ---
   apiVersion: networking.k8s.io/v1
   kind: NetworkPolicy
   metadata:
-    name: allow-same-namespace
-    namespace: default
-  spec:
-    podSelector:
-      matchLabels:
-        app: static-website
-    ingress:
-    - from:
-      - podSelector: {}
+      name: allow-same-namespace
+      namespace: default
+  spec  :
+      podSelector:
+        matchLabels:
+          app: static-web
+      ingress:
+      - from:
+        - podSelector: {}
   ```
 
 - Apply the network policy:
   ```bash
-  kubectl apply -f network-policy.yaml
+  kubectl apply -f net-policy.yml
   ```
 
 #### **5. Enable NGINX Ingress Controller**
@@ -110,38 +111,34 @@ spec:
   minikube addons enable ingress
   ```
 
-- Verify the ingress controller is running:
-  ```bash
-  kubectl get pods -n kube-system | grep nginx
-  ```
-
 #### **6. Create an Ingress Resource**
 - Define an `ingress.yaml` file:
   ```yaml
+  ---
   apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
-    name: static-website-ingress
-    namespace: default
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
+      name: static-website-ingress
+      namespace: default
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
   spec:
-    rules:
-    - host: static-website.local
-      http:
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: static-website
-              port:
-                number: 80
+      rules:
+      - host: static-website.local
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: static-web-svc
+                port:
+                  number: 80
   ```
 
 - Apply the ingress resource:
   ```bash
-  kubectl apply -f ingress.yaml
+  kubectl apply -f ingress.yml
   ```
 
 #### **7. Update `/etc/hosts`**
