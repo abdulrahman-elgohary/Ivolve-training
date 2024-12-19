@@ -99,7 +99,7 @@ A **DaemonSet** ensures that a copy of a specific Pod runs on all (or some) node
     ```
 - It will be in the pending state because it doesn't match the tain of the minikube node
 
-![image](https://github.com/user-attachments/assets/19cde234-fabc-404b-9fa0-5f13305aa27e)
+  ![image](https://github.com/user-attachments/assets/19cde234-fabc-404b-9fa0-5f13305aa27e)
 
 ### **Step 4: Update the Toleration to Match the Taint**
 1. Edit the YAML file to update the toleration value to `red`:
@@ -125,7 +125,7 @@ A **DaemonSet** ensures that a copy of a specific Pod runs on all (or some) node
     ```
 - Now It's on running state because it matches the taint of the Node
 
-![image](https://github.com/user-attachments/assets/287aef1f-9573-4cfd-8866-caf07e3537c3)
+  ![image](https://github.com/user-attachments/assets/287aef1f-9573-4cfd-8866-caf07e3537c3)
 
 ### **Step 5: Comparison of Taint, Toleration, and Node Affinity**
 
