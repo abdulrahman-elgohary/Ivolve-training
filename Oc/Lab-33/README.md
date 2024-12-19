@@ -103,6 +103,13 @@ kubectl get pods
 
 - It takes a while until it's ready because of the Readiness Probe
 
+- Ensure the init container completes successfully and Jenkins initializes properly:
+
+```bash
+kubectl logs <jenkins-pod-name> -c init-container
+```
+![image](https://github.com/user-attachments/assets/1a5f71a3-b949-49ce-ad4d-5bf4c89a02ee)
+
 - Retrieve the node-ip
 ```bash
 minikube ip
